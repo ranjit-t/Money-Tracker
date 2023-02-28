@@ -72,7 +72,8 @@ export default function MoneyTracker({ authed, UID }) {
             >
               <input
                 type="text"
-                placeholder="Transcation Description"
+                placeholder="Transaction Description"
+                required
                 value={desciption}
                 onChange={(e) => {
                   setDesciption(e.target.value);
@@ -81,6 +82,7 @@ export default function MoneyTracker({ authed, UID }) {
               <input
                 type="number"
                 placeholder="Enter Amount (€)"
+                required
                 value={amount}
                 onChange={(e) => {
                   setAmount(e.target.value);
