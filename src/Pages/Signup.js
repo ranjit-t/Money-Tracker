@@ -26,7 +26,7 @@ export function SignUp({ authed }) {
   return (
     <div className="App">
       <div className="header">
-        <h2>FireBase-Autentication</h2>
+        <h2>Signup</h2>
       </div>
       <form
         onSubmit={(e) => {

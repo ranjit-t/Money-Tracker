@@ -2,13 +2,13 @@
   width: 100%;
 
   text-align: center;
-  /* margin-top: 50px; */
+
   display: flex;
   flex-direction: column;
-  margin-left: auto;
-  margin-right: auto;
-  align-items: center;
-  justify-content: center;
+  /* margin-left: auto;
+  margin-right: auto; */
+  /* align-items: center;
+  justify-content: center; */
 }
 body {
   background-color: antiquewhite;
@@ -43,7 +43,7 @@ label {
 }
 .nav-bar {
   background-color: rgb(0, 87, 87);
-  padding: 20px;
+  padding: 20px 0px;
   color: white;
   width: 100%;
 }
@@ -59,4 +59,80 @@ label {
 }
 .money-tracker {
   margin-top: 50px;
+  display: grid;
+  grid-template-columns: 60% 40%;
+  column-gap: 20px;
+  /* grid-template-columns: auto auto; */
+  margin-left: 10%;
+  margin-right: 10%;
+}
+.each-transaction,
+.total-balance {
+  background-color: white;
+  height: 50px;
+  width: auto;
+  box-shadow: 1px 1px 4px grey;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  position: relative;
+  font-size: 1.3em;
+  border-radius: 5px;
+}
+.plus {
+  border-left: 7px solid rgb(0, 87, 87);
+}
+.minus {
+  border-left: 7px solid rgb(252, 63, 0);
+}
+.total-balance.plus {
+  border-left: 20px solid rgb(0, 87, 87);
+}
+.total-balance.minus {
+  border-left: 20px solid rgb(252, 63, 0);
+}
+.each-transaction > .amount {
+  position: absolute;
+  right: 20px;
+}
+.each-transaction > .description {
+  position: absolute;
+  left: 20px;
+}
+.money-tracker-not-logged {
+  text-align: center;
+  margin-top: 50px;
+}
+.transactions-list {
+  display: flex;
+  flex-direction: column;
+}
+ul > * {
+  padding: 0;
+  list-style-type: none;
+}
+.transaction-form {
+  width: 300px;
+  padding: 30px;
+  font-size: 1.1em;
+}
+.transaction-form > * {
+  margin-top: 10px;
+  font-size: 1.1em;
+}
+@media (max-width: 615px) {
+  .money-tracker {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+  .transactions-list {
+    width: 300px;
+    margin-bottom: 50px;
+  }
+  .transaction-form {
+    width: 240px;
+  }
 }
