@@ -30,7 +30,7 @@ function App() {
       <BrowserRouter>
         <div className="nav-bar">
           <NavLink className="nav-link" to="/">
-            Money Tracker
+            Transactions
           </NavLink>
           {!userLoggeIn && (
             <NavLink className="nav-link" to="/signup">

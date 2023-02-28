@@ -29,9 +29,16 @@ form {
   border: none;
   box-shadow: 1px 1px 4px grey;
 }
+form > * {
+  margin-top: 10px;
+}
+
 label {
   display: flex;
   flex-direction: column;
+}
+label > * {
+  margin-bottom: 5px;
 }
 .header {
   width: 100%;
@@ -125,17 +132,14 @@ button:active {
   display: flex;
   flex-direction: column;
 }
-ul > * {
-  padding: 0;
-  list-style-type: none;
-}
+
 .transaction-form {
   width: 300px;
   padding: 30px;
   font-size: 1.1em;
 }
 .transaction-form > * {
-  margin-top: 10px;
+  margin-top: 30px;
   font-size: 1.1em;
 }
 @media (max-width: 615px) {
