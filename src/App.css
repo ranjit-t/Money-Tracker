@@ -100,6 +100,23 @@ label {
   position: absolute;
   left: 20px;
 }
+button {
+  background-color: white;
+  border: 1px solid teal;
+  color: teal;
+  height: 1.7em;
+  font-size: 1.1em;
+  box-shadow: 1px 1px 3px grey;
+}
+button:hover {
+  background-color: teal;
+  color: white;
+  box-shadow: 1px 1px 6px grey;
+}
+button:active {
+  background-color: rgb(6, 82, 82);
+  color: white;
+}
 .money-tracker-not-logged {
   text-align: center;
   margin-top: 50px;

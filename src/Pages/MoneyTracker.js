@@ -19,7 +19,7 @@ export default function MoneyTracker({ authed, UID }) {
   return (
     <div className="App">
       <div className="header">
-        <h2>MoneyTracker</h2>
+        <h2>Money Tracker</h2>
       </div>
 
       {authed ? (
@@ -86,7 +86,7 @@ export default function MoneyTracker({ authed, UID }) {
                   setAmount(e.target.value);
                 }}
               />
-              <button>Add</button>
+              <button className="trans-btn">Add Transaction</button>
             </form>
           </div>
         </div>

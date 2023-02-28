@@ -58,7 +58,7 @@ export default function Login({ authed }) {
             }}
           />
         </label>
-        <button>Sign Up</button>
+        <button>Log In</button>
       </form>
       <div>
         <p>Don't have an Account ?</p>
