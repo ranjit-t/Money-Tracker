@@ -1,12 +1,76 @@
 import React, { useState, useEffect } from "react";
+import { db } from "../config";
+import { getDocs, collection } from "firebase/firestore";
+import { addDoc } from "firebase/firestore";
+import { doc, deleteDoc } from "firebase/firestore";
+
+//Icons
+import { FaTrash } from "react-icons/fa";
 
 export default function MoneyTracker({ authed, UID }) {
-  // console.log(authed);
-  // console.log(UID);
-  const [desciption, setDesciption] = useState("");
+  const [description, setDescription] = useState("");
   const [amount, setAmount] = useState("");
   const [allTransactions, setAllTransactions] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
+
+  // Fetching From Firebase
+
+  const fetchPost = async () => {
+    await getDocs(collection(db, "transactions")).then((snapshot) => {
+      const newData = snapshot.docs.map((doc) => {
+        // console.log(doc.id);
+        return {
+          ...doc.data(),
+          id: doc.id,
+        };
+      });
+
+      setAllTransactions(
+        newData.filter((trans) => {
+          return trans.UID === UID;
+        })
+      );
+      // setAllTransactions(newData);
+    });
+  };
+  // fetchPost();
+  useEffect(() => {
+    fetchPost();
+  }, []);
+
+  // Adding Data to FireBase
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const transaction = {
+      amount: parseFloat(amount).toFixed(2),
+      description: description,
+      UID: UID,
+    };
+
+    try {
+      await addDoc(collection(db, "transactions"), transaction);
+      fetchPost();
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+
+    // setAllTransactions([...allTransactions, transaction]);
+    setAmount("");
+    setDescription("");
+  };
+
+  // Deleting Data
+
+  const handleDelete = async (id) => {
+    try {
+      const ref = doc(db, "transactions", id);
+      await deleteDoc(ref);
+      fetchPost();
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   useEffect(() => {
     const computedTotal = allTransactions.reduce(
@@ -46,37 +110,29 @@ export default function MoneyTracker({ authed, UID }) {
                       : "each-transaction minus"
                   }
                 >
-                  <span className="description">{trans.desciption}</span>
+                  <span className="description">{trans.description}</span>
                   <span className="amount">{trans.amount}€</span>
+                  <span className="icons">
+                    <FaTrash
+                      onClick={() => {
+                        handleDelete(trans.id);
+                      }}
+                    />
+                  </span>
                 </div>
               );
             })}
           </div>
           <div>
             <h3>New Transaction</h3>
-            <form
-              className="transaction-form"
-              onSubmit={(e) => {
-                e.preventDefault();
-                const transaction = {
-                  amount: parseFloat(amount).toFixed(2),
-                  desciption: desciption,
-                  UID: UID,
-                };
-
-                setAllTransactions([...allTransactions, transaction]);
-                console.log(allTransactions);
-                setAmount("");
-                setDesciption("");
-              }}
-            >
+            <form className="transaction-form" onSubmit={handleSubmit}>
               <input
                 type="text"
                 placeholder="Transaction Description"
                 required
-                value={desciption}
+                value={description}
                 onChange={(e) => {
-                  setDesciption(e.target.value);
+                  setDescription(e.target.value);
                 }}
               />
               <input

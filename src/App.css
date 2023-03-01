@@ -101,11 +101,21 @@ label > * {
 }
 .each-transaction > .amount {
   position: absolute;
-  right: 20px;
+  right: 70px;
 }
 .each-transaction > .description {
   position: absolute;
   left: 20px;
+}
+.each-transaction > .icons {
+  position: absolute;
+  right: 10px;
+  font-size: 0.91em;
+  color: teal;
+}
+.each-transaction > .icons:hover {
+  color: rgb(252, 63, 0);
+  cursor: pointer;
 }
 button {
   background-color: white;
