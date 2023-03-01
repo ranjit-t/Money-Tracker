@@ -10,7 +10,7 @@ v1.zip
 /coverage
 
 # production
-/build
+# /build
 
 # misc
 .DS_Store
