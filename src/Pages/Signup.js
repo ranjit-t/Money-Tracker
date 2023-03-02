@@ -7,6 +7,7 @@ export function SignUp({ authed }) {
   const navigate = useNavigate();
   const [regEmail, setRegEmail] = useState("");
   const [regPassword, setRegPassword] = useState("");
+  const [error, setError] = useState("");
 
   const register = async () => {
     try {
@@ -19,7 +20,11 @@ export function SignUp({ authed }) {
 
       //   console.log(user);
     } catch (error) {
-      alert(error.message);
+      // alert(error.message);
+      setError(error.message.slice(10, 100));
+      setTimeout(() => {
+        setError("");
+      }, 3000);
       authed(false);
     }
   };
@@ -40,6 +45,7 @@ export function SignUp({ authed }) {
           <span>Email: </span>
           <input
             value={regEmail}
+            required
             type="email"
             onChange={(e) => {
               e.preventDefault();
@@ -51,6 +57,7 @@ export function SignUp({ authed }) {
           <span>Password: </span>
           <input
             value={regPassword}
+            required
             type="password"
             onChange={(e) => {
               e.preventDefault();
@@ -60,6 +67,9 @@ export function SignUp({ authed }) {
         </label>
         <button>Sign Up</button>
       </form>
+      <div>
+        {error && <p className="message login-signup-error">{error}</p>}
+      </div>
 
       <div>
         <p>Already Have an Account ? </p>

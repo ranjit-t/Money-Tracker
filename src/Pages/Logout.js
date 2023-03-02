@@ -1,10 +1,13 @@
 import { auth } from "../config";
 import { signOut } from "firebase/auth";
 
-export default async function Logout() {
+export default async function Logout(setUserJustLoggedout) {
   signOut(auth)
     .then(() => {
-      alert("User Logged Out");
+      setUserJustLoggedout(true);
+      setTimeout(() => {
+        setUserJustLoggedout(false);
+      }, 5000);
     })
     .catch((error) => {
       alert(error.message);

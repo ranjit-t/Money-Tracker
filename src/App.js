@@ -12,12 +12,13 @@ import { auth } from "./config";
 function App() {
   //Checking if user is logged in
   const [userLoggeIn, setUserLoggeIn] = useState();
-  const [UID, setUID] = useState("");
+  const [userUID, setUserUID] = useState("");
+  const [userJustLoggedout, setUserJustLoggedout] = useState(false);
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
       setUserLoggeIn(true);
-      setUID(user.uid);
+      setUserUID(user.uid);
       // console.log(UID);
     } else {
       setUserLoggeIn(false);
@@ -46,7 +47,7 @@ function App() {
             <NavLink
               className="nav-link"
               onClick={() => {
-                Logout();
+                Logout(setUserJustLoggedout);
               }}
             >
               Logout
@@ -60,7 +61,11 @@ function App() {
           <Route
             path="/"
             element={
-              <MoneyTracker authed={userLoggeIn} UID={UID}></MoneyTracker>
+              <MoneyTracker
+                authed={userLoggeIn}
+                userUID={userUID}
+                userJustLoggedout={userJustLoggedout}
+              ></MoneyTracker>
             }
           />
         </Routes>

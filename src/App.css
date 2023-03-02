@@ -136,7 +136,7 @@ button:active {
 }
 .money-tracker-not-logged {
   text-align: center;
-  margin-top: 50px;
+  margin-top: 10px;
 }
 .transactions-list {
   display: flex;
@@ -166,4 +166,23 @@ button:active {
   .transaction-form {
     width: 240px;
   }
+}
+
+.message.loggedout {
+  background-color: rgb(2, 96, 96);
+  color: white;
+  font-size: 1.1em;
+  width: 320px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.message.login-signup-error {
+  background-color: red;
+  color: white;
+  font-size: 1.1em;
+  width: 300px;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
 }

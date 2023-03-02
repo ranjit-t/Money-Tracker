@@ -7,18 +7,23 @@ export default function Login({ authed }) {
   const navigate = useNavigate();
   const [logEmail, setlogEmail] = useState("");
   const [logPassword, setlogPassword] = useState("");
+  const [error, setError] = useState("");
 
   const login = async () => {
     try {
       await signInWithEmailAndPassword(auth, logEmail, logPassword).then(
         (res) => {
-          console.log(res.user);
+          // console.log(res.user);
         }
       );
       authed(true);
       navigate("/");
     } catch (error) {
-      alert(error.message);
+      // alert(error.message);
+      setError(error.message);
+      setTimeout(() => {
+        setError("");
+      }, 3000);
       authed(false);
     }
   };
@@ -60,6 +65,13 @@ export default function Login({ authed }) {
         </label>
         <button>Log In</button>
       </form>
+      <div>
+        {error && (
+          <p className="message login-signup-error">
+            Check Your Email and Password
+          </p>
+        )}
+      </div>
       <div>
         <p>Don't have an Account ?</p>
         <a href="/signup">Signup</a>

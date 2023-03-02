@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { db } from "../config";
 import { getDocs, collection } from "firebase/firestore";
 import { addDoc } from "firebase/firestore";
@@ -7,7 +7,7 @@ import { doc, deleteDoc } from "firebase/firestore";
 //Icons
 import { FaTrash } from "react-icons/fa";
 
-export default function MoneyTracker({ authed, UID }) {
+export default function MoneyTracker({ authed, userUID, userJustLoggedout }) {
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState("");
   const [allTransactions, setAllTransactions] = useState([]);
@@ -15,28 +15,28 @@ export default function MoneyTracker({ authed, UID }) {
 
   // Fetching From Firebase
 
-  const fetchPost = async () => {
-    await getDocs(collection(db, "transactions")).then((snapshot) => {
+  const fetchPost = useCallback(() => {
+    getDocs(collection(db, "transactions")).then((snapshot) => {
       const newData = snapshot.docs.map((doc) => {
-        // console.log(doc.id);
+        console.log("fetching");
         return {
           ...doc.data(),
           id: doc.id,
         };
       });
 
-      setAllTransactions(
-        newData.filter((trans) => {
-          return trans.UID === UID;
-        })
-      );
-      // setAllTransactions(newData);
+      const allTransTemp = newData.filter((trans) => {
+        return trans.userUID === userUID;
+      });
+      console.log(allTransTemp);
+      setAllTransactions(allTransTemp);
     });
-  };
-  // fetchPost();
+  }, [userUID]);
+
   useEffect(() => {
+    console.log("fetching");
     fetchPost();
-  }, []);
+  }, [userUID, fetchPost]);
 
   // Adding Data to FireBase
 
@@ -45,7 +45,7 @@ export default function MoneyTracker({ authed, UID }) {
     const transaction = {
       amount: parseFloat(amount).toFixed(2),
       description: description,
-      UID: UID,
+      userUID: userUID,
     };
 
     try {
@@ -64,6 +64,8 @@ export default function MoneyTracker({ authed, UID }) {
 
   const handleDelete = async (id) => {
     try {
+      console.log("deleting");
+
       const ref = doc(db, "transactions", id);
       await deleteDoc(ref);
       fetchPost();
@@ -73,6 +75,8 @@ export default function MoneyTracker({ authed, UID }) {
   };
 
   useEffect(() => {
+    console.log("amount total");
+
     const computedTotal = allTransactions.reduce(
       (acc, trans) => acc + parseInt(trans.amount),
       0
@@ -84,6 +88,13 @@ export default function MoneyTracker({ authed, UID }) {
     <div className="App">
       <div className="header">
         <h2>Money Tracker</h2>
+      </div>
+      <div>
+        {userJustLoggedout && (
+          <p className="message loggedout">
+            You are Logged Out, Come Back Soon!
+          </p>
+        )}
       </div>
 
       {authed ? (
@@ -150,7 +161,8 @@ export default function MoneyTracker({ authed, UID }) {
         </div>
       ) : (
         <div className="money-tracker-not-logged">
-          <a href="/login">Please Log in to View This Page</a>
+          <h2>Welcome to Money Tracker</h2>
+          <a href="/login">Please Log in to Manage Your Tracker</a>
           {/* <p>Please Log in to View This Page</p> */}
         </div>
       )}
