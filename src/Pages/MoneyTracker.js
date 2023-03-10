@@ -78,7 +78,7 @@ export default function MoneyTracker({ authed, userUID, userJustLoggedout }) {
     console.log("amount total");
 
     const computedTotal = allTransactions.reduce(
-      (acc, trans) => acc + parseInt(trans.amount),
+      (acc, trans) => acc + parseFloat(trans.amount),
       0
     );
     setTotalAmount(computedTotal);
